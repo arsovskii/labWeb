@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Welcome and Choose a Course</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+
+</head>
+<body>
+<header>
+    <h1>Courses List</h1>
+</header>
+<main>
+    <h2>Choose course:</h2>
+    <!--/*@thymesVar id="course" type="mk.ukim.finki.wp.model.Course"*/-->
+
+    <form th:action="@{/listCourses}" method="POST">
+        <th:block th:each="course : ${classes}">
+
+            <input type="radio" name="courseId" th:value="${course.getCourseId()}">
+            <th:span th:utext="${course.getName()}"></th:span>
+            <br/>
+
+        </th:block>
+        <button type="submit">Submit</button>
+    </form>
+    <br/>
+
+</main>
+</body>
+</html>
