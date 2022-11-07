@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>List of all new students</title>
+</head>
+<body>
+<header>
+    <h1>New students in database </h1>
+</header>
+<section>
+  <th:div th:if="${error != null}" th:uinfo="${error}"></th:div>
+
+  <ul th:each="student : ${students}">
+    <li th:utext="${student.getName() + ' ' + student.getSurname() + ' (' + student.getUsername() + ')' }"></li>
+  </ul>
+
+  <a href="/listCourses">Back</a>
+</section>
+</body>
+</html>

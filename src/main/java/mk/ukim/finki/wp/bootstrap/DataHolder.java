@@ -16,11 +16,11 @@ public class DataHolder {
 
     @PostConstruct
     public void init() {
-        students.add(new Student("arsovski3", "jakpass", "David", "Arsovski"));
-        students.add(new Student("serBog", "dzekcesum", "Sergej", "Bogatinoski"));
-        students.add(new Student("pastelo", "iLoveSkopje", "Eva", "Smileska"));
-        students.add(new Student("kut", "mimoza3", "Mihaela", "Pavleska"));
-        students.add(new Student("mrBob", "goAhed3", "Boban", "Bob"));
+        students.add(new Student("arsovski3", "jakpass", "David", "Arsovski",Boolean.FALSE));
+        students.add(new Student("serBog", "dzekcesum", "Sergej", "Bogatinoski",Boolean.FALSE));
+        students.add(new Student("pastelo", "iLoveSkopje", "Eva", "Smileska",Boolean.FALSE));
+        students.add(new Student("kut", "mimoza3", "Mihaela", "Pavleska",Boolean.FALSE));
+        students.add(new Student("mrBob", "goAhed3", "Boban", "Bob",Boolean.FALSE));
 
         List<Student> first = new ArrayList<>();
         List<Student> second = new ArrayList<>();

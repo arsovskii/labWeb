@@ -14,8 +14,8 @@ import java.io.IOException;
 @WebServlet(name = "Course List",urlPatterns = "/listCourses")
 public class CoursesListServlet extends HttpServlet {
 
-    private CourseService courseService;
-    private SpringTemplateEngine springTemplateEngine;
+    private final CourseService courseService;
+    private final SpringTemplateEngine springTemplateEngine;
 
     public CoursesListServlet(CourseService courseService, SpringTemplateEngine springTemplateEngine) {
         this.courseService = courseService;

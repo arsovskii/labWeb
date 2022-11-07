@@ -1,5 +1,7 @@
 package mk.ukim.finki.wp.web;
 
+import mk.ukim.finki.wp.model.Student;
+import mk.ukim.finki.wp.repository.StudentRepository;
 import mk.ukim.finki.wp.service.StudentService;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -11,29 +13,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Add Student Servlet", urlPatterns = "/AddStudent")
-public class ListStudentServlet extends HttpServlet {
+@WebServlet(name = "New Student Servlet List", urlPatterns = "/newStudentList")
+public class NewStudentLister extends HttpServlet {
 
-    private final SpringTemplateEngine springTemplateEngine;
     private final StudentService studentService;
+    private final SpringTemplateEngine springTemplateEngine;
 
-    public ListStudentServlet(SpringTemplateEngine springTemplateEngine, StudentService studentService) {
-        this.springTemplateEngine = springTemplateEngine;
+    public NewStudentLister(StudentService studentService, SpringTemplateEngine springTemplateEngine) {
         this.studentService = studentService;
+        this.springTemplateEngine = springTemplateEngine;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        Long courseId = null;
 
-        context.setVariable("students",studentService.listAll());
+        context.setVariable("students",studentService.listAll().stream().filter(Student::getNewStudent).toList());
 
-        springTemplateEngine.process("listStudents.html", context, resp.getWriter());
+        springTemplateEngine.process("newUserList.html",context,resp.getWriter());
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        super.doPost(req, resp);
     }
 }

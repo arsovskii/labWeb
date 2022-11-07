@@ -14,8 +14,8 @@ import java.util.List;
 public class CourseServiceImplementation implements CourseService {
 
 
-    private CourseRepository courseRepository;
-    private StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
 
     public CourseServiceImplementation(CourseRepository courseRepository, StudentRepository studentRepository) {
         this.courseRepository = courseRepository;

@@ -14,7 +14,7 @@ import java.util.Objects;
 public class StudentServiceImplementation implements StudentService {
 
 
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     public StudentServiceImplementation(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -36,7 +36,7 @@ public class StudentServiceImplementation implements StudentService {
         if (Objects.equals(username, "") || Objects.equals(name, "") || Objects.equals(surname, "") || Objects.equals(password, "")) {
             throw new NotEnoughInfoForNewStudentException();
         }
-        return studentRepository.addStudent(new Student(username, password, name, surname));
+        return studentRepository.addStudent(new Student(username, password, name, surname, Boolean.TRUE));
 
 
     }
