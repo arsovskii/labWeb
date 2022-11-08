@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Create a New Student Page</title>
+</head>
+<body>
+<header>
+  <h1>Create a new class </h1>
+</header>
+<section>
+  <th:block th:if="${error != null}">
+    <th:div th:utext="${error}"></th:div>
+  </th:block>
+  <!--/*@thymesVar id="teacher" type="mk.ukim.finki.wp.model.Teacher"*/-->
+  <!--/*@thymesVar id="course" type="mk.ukim.finki.wp.model.Course"*/-->
+
+  <form  th:action="@{/courses/add}" method="POST">
+    <input id="courseId" type="hidden" name="courseId" th:value="(${course} != null ? ${course.getCourseId()} : '')">
+
+
+    <label for='name'>Name:</label><input required id='name' type='text' name='name' th:value="(${course} != null ? ${course.getName()} : '')"/><br/>
+    <label for='desc'>Description:</label><input required id='desc' type='text' name='desc'  th:value="(${course} != null ? ${course.getDescription()} : '')" style="width:500px;"/><br/>
+    <label for='teacher'>Select teacher:</label>
+    <select name='teacherId' id="teacher" required >
+      <option th:each="teacher : ${teachers}" th:value="${teacher.getId()}" th:text="${teacher.getName() + ' ' + teacher.getSurname()}" th:selected="${course != null && course.getTeacher().getId() == teacher.getId()}"></option>
+    </select><br>
+
+    <button type="submit">Submit</button>
+    <br><br>
+    <a href="/courses">Go Back</a>
+  </form>
+
+
+
+</section>
+</body>
+</html>

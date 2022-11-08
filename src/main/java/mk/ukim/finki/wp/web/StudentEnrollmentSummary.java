@@ -26,8 +26,8 @@ public class StudentEnrollmentSummary extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        context.setVariable("students", courseService.listStudentsByCourse(Long.parseLong((String) req.getSession().getAttribute("courseId"))));
-        context.setVariable("course", courseService.courseNameFromId(Long.parseLong((String) req.getSession().getAttribute("courseId"))));
+        context.setVariable("students", courseService.listStudentsByCourse((long) req.getSession().getAttribute("courseId")));
+        context.setVariable("course", courseService.courseNameFromId((long) req.getSession().getAttribute("courseId")));
         springTemplateEngine.process("studentsInCourse.html", context, resp.getWriter());
     }
 
@@ -35,15 +35,15 @@ public class StudentEnrollmentSummary extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
-            courseService.addStudentInCourse(req.getParameter("size"), Long.parseLong((String) req.getSession().getAttribute("courseId")));
-
+            courseService.addStudentInCourse(req.getParameter("size"), (long) req.getSession().getAttribute("courseId"));
+            resp.sendRedirect("/StudentEnrollmentSummary");
         }catch (Exception e){
 //            req.setAttribute("error",e.getMessage());
 //            WebContext context = new WebContext(req,resp,req.getServletContext());
 //            context.setVariable("error",e.getMessage());
 //            springTemplateEngine.process("studentsInCourse.html", context, resp.getWriter());
-            System.out.println("greska!");
+            resp.sendRedirect("/courses?error=Student was Already in Course!");
         }
-        resp.sendRedirect("/StudentEnrollmentSummary");
+
     }
 }

@@ -17,9 +17,9 @@ public class courseIdFilter implements Filter {
 
         String path = req.getServletPath();
 
-        if (!path.equals("/listCourses") && req.getSession().getAttribute("courseId") == null)
-            res.sendRedirect("/listCourses");
-        else{
+        if ((!(path.contains("/courses"))  && req.getSession().getAttribute("courseId") == null)|| path.equalsIgnoreCase("/listcourses"))
+            res.sendRedirect("/courses");
+        else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
     }

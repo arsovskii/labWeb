@@ -16,17 +16,31 @@
     <h1>Courses List</h1>
 </header>
 <main>
-    <h2>Choose course:</h2>
-    <!--/*@thymesVar id="course" type="mk.ukim.finki.wp.model.Course"*/-->
+    <a href="/courses/add">Add new Course!</a><br>
 
-    <form th:action="@{/listCourses}" method="POST">
-        <th:block th:each="course : ${classes}">
+    <th:block th:if="${hasError == true}">
+        <br>
+        <th:div th:text="${error}" style="background:red; color:white;"></th:div>
+    </th:block>
+
+    <h2>Choose course:</h2>
+        <!--/*@thymesVar id="course" type="mk.ukim.finki.wp.model.Course"*/-->
+
+    <form th:action="@{/courses}" method="POST">
+
+        <th:div th:each="course : ${courses}" >
 
             <input type="radio" name="courseId" th:value="${course.getCourseId()}">
-            <th:span th:utext="${course.getName()}"></th:span>
-            <br/>
 
-        </th:block>
+            <th:span th:text="${course.getName()}"></th:span>
+            <br>
+            <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"  >Edit</a>
+            <br>
+            <a th:href="@{'/courses/delete/{id}' (id=${course.getCourseId()})}"  >Delete</a>
+            <br/><br>
+
+        </th:div>
+
         <button type="submit">Submit</button>
     </form>
     <br/>

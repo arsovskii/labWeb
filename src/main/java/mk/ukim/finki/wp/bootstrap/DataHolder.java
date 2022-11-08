@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.bootstrap;
 
 import mk.ukim.finki.wp.model.Course;
 import mk.ukim.finki.wp.model.Student;
+import mk.ukim.finki.wp.model.Teacher;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -13,14 +14,22 @@ public class DataHolder {
 
     public static List<Student> students = new ArrayList<>();
     public static List<Course> courses = new ArrayList<>();
+    public static List<Teacher> teachers = new ArrayList<>();
 
     @PostConstruct
     public void init() {
-        students.add(new Student("arsovski3", "jakpass", "David", "Arsovski",Boolean.FALSE));
-        students.add(new Student("serBog", "dzekcesum", "Sergej", "Bogatinoski",Boolean.FALSE));
-        students.add(new Student("pastelo", "iLoveSkopje", "Eva", "Smileska",Boolean.FALSE));
-        students.add(new Student("kut", "mimoza3", "Mihaela", "Pavleska",Boolean.FALSE));
-        students.add(new Student("mrBob", "goAhed3", "Boban", "Bob",Boolean.FALSE));
+        students.add(new Student("arsovski3", "jakpass", "David", "Arsovski", Boolean.FALSE));
+        students.add(new Student("serBog", "dzekcesum", "Sergej", "Bogatinoski", Boolean.FALSE));
+        students.add(new Student("pastelo", "iLoveSkopje", "Eva", "Smileska", Boolean.FALSE));
+        students.add(new Student("kut", "mimoza3", "Mihaela", "Pavleska", Boolean.FALSE));
+        students.add(new Student("mrBob", "goAhed3", "Boban", "Bob", Boolean.FALSE));
+
+        teachers.add(new Teacher("Afrodita", "Stefanoska"));
+        teachers.add(new Teacher("Marija", "Dulevska"));
+        teachers.add(new Teacher("Borce", "Glisero"));
+        teachers.add(new Teacher("Tatjana", "Gospel"));
+        teachers.add(new Teacher("Zoran", "Nikolov"));
+
 
         List<Student> first = new ArrayList<>();
         List<Student> second = new ArrayList<>();
@@ -41,26 +50,26 @@ public class DataHolder {
         }
 
 
-        courses.add(new Course(4513123L,
+        courses.add(new Course(
                 "Veb Programiranje",
                 "Poceten kurs za backend programiranje so Java Spring",
-                first));
-        courses.add(new Course(7156871L,
+                first, teachers.get(4)));
+        courses.add(new Course(
                 "Strukturno Programiranje",
                 "Voved vo paradigmata strukturno programiranje i C programskiot jazik",
-                second));
-        courses.add(new Course(3874562L,
+                second, teachers.get(1)));
+        courses.add(new Course(
                 "Diskretni Strukturi 1",
                 "Samo za jaki matematicari",
-                third));
-        courses.add(new Course(9414731L,
+                third, teachers.get(0)));
+        courses.add(new Course(
                 "Inzinerska Matematika",
                 "Matematika za pospremni studenti",
-                new ArrayList<>()));
-        courses.add(new Course(1000415L,
+                new ArrayList<>(),teachers.get(3)));
+        courses.add(new Course(
                 "Verojatnost i Statistika",
                 "Begaj podaleku",
-                fifth));
+                fifth, teachers.get(0)));
 
 
     }
