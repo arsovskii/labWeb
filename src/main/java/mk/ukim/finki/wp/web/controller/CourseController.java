@@ -1,8 +1,7 @@
 package mk.ukim.finki.wp.web.controller;
 
 
-import mk.ukim.finki.wp.model.Course;
-import mk.ukim.finki.wp.model.exceptions.CourseDoenstExistException;
+import mk.ukim.finki.wp.model.exceptions.CourseDoesntExistException;
 import mk.ukim.finki.wp.service.CourseService;
 import mk.ukim.finki.wp.service.TeacherService;
 import org.springframework.stereotype.Controller;
@@ -29,19 +28,17 @@ public class CourseController {
     public String getCoursesPage(@RequestParam(required = false) String error, Model model) {
 
         model.addAttribute("courses", courseService.listAll().stream().sorted(Comparator.comparing(i->i.getName().toLowerCase())).toList());
-        model.addAttribute("hasError",false);
+
         if(error != null){
-            model.addAttribute("hasError", true);
             model.addAttribute("error",error);
         }
 
         return "listCourses";
     }
 
-    @GetMapping("/add")
-    public String showCourseForm(Model model) {
+    @GetMapping("/add-form")
+    public String getAddCoursePage(Model model) {
         model.addAttribute("teachers", teacherService.findAll());
-        model.addAttribute("type","add");
         return "add-course";
     }
 
@@ -55,12 +52,11 @@ public class CourseController {
     public String getEditCoursePage(@PathVariable Long id, Model model){
 
         try{
-            model.addAttribute("course", courseService.getCourseFromId(id).orElseThrow(CourseDoenstExistException::new));
+            model.addAttribute("course", courseService.getCourseFromId(id).orElseThrow(CourseDoesntExistException::new));
         }catch (Exception e){
             return "redirect:/courses?error="+e.getMessage();
         }
         model.addAttribute("teachers", teacherService.findAll());
-        model.addAttribute("type","edit");
         return "add-course";
     }
 
@@ -70,7 +66,7 @@ public class CourseController {
         return "redirect:/AddStudent";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add-form")
     public String saveCourse(@RequestParam(required = false) Long courseId,@RequestParam Long teacherId, @RequestParam String name, @RequestParam String desc) {
 
         try{

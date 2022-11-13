@@ -5,8 +5,7 @@ import mk.ukim.finki.wp.model.Course;
 import mk.ukim.finki.wp.model.Student;
 import mk.ukim.finki.wp.model.Teacher;
 import mk.ukim.finki.wp.model.exceptions.CourseAlreadyExists;
-import mk.ukim.finki.wp.model.exceptions.CourseDoenstExistException;
-import mk.ukim.finki.wp.model.exceptions.NotEnoughInfoForNewStudentException;
+import mk.ukim.finki.wp.model.exceptions.CourseDoesntExistException;
 import mk.ukim.finki.wp.model.exceptions.StudentAlreadyAttendingCourseException;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +27,7 @@ public class CourseRepository {
     public List<Student> findAllStudentsByCourse(Long courseId) {
         try {
             if (findById(courseId).isEmpty()) {
-                throw new CourseDoenstExistException();
+                throw new CourseDoesntExistException();
             }
             return findById(courseId).get().getStudents();
         } catch (Exception e) {
@@ -37,10 +36,10 @@ public class CourseRepository {
 
     }
 
-    public Course addStudentToCourse(Student student, Course course) throws CourseDoenstExistException, StudentAlreadyAttendingCourseException {
+    public Course addStudentToCourse(Student student, Course course) throws CourseDoesntExistException, StudentAlreadyAttendingCourseException {
 
         if (findById(course.getCourseId()).isEmpty()) {
-            throw new CourseDoenstExistException();
+            throw new CourseDoesntExistException();
         }
 
         if (course.getStudents().stream().anyMatch(i -> i.getUsername().equals(student.getUsername()))) {
@@ -63,7 +62,7 @@ public class CourseRepository {
     }
     public void deleteCourseById(Long id){
         try{
-            DataHolder.courses.remove(this.findById(id).orElseThrow(CourseDoenstExistException::new));
+            DataHolder.courses.remove(this.findById(id).orElseThrow(CourseDoesntExistException::new));
 
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -74,14 +73,11 @@ public class CourseRepository {
         if (DataHolder.courses.stream().anyMatch(i->i.getName().equals(name))){
             throw new CourseAlreadyExists();
         }
-        Course course = DataHolder.courses.stream().filter(i->i.getCourseId().equals(id)).findFirst().orElseThrow(CourseDoenstExistException::new);
+        Course course = DataHolder.courses.stream().filter(i->i.getCourseId().equals(id)).findFirst().orElseThrow(CourseDoesntExistException::new);
         course.setName(name);
         course.setDescription(description);
         course.setTeacher(teacher);
-        if(DataHolder.courses.stream().anyMatch(i->i.getCourseId().equals(id))){
-            DataHolder.courses.remove(DataHolder.courses.stream().filter(i->i.getCourseId().equals(id)).findFirst().get());
-            DataHolder.courses.add(course);
-        }
+
         return course;
     }
 

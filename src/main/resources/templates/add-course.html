@@ -15,7 +15,7 @@
   <!--/*@thymesVar id="teacher" type="mk.ukim.finki.wp.model.Teacher"*/-->
   <!--/*@thymesVar id="course" type="mk.ukim.finki.wp.model.Course"*/-->
 
-  <form  th:action="@{/courses/add}" method="POST">
+  <form  th:action="@{/courses/add-form}" method="POST">
     <input id="courseId" type="hidden" name="courseId" th:value="(${course} != null ? ${course.getCourseId()} : '')">
 
 
