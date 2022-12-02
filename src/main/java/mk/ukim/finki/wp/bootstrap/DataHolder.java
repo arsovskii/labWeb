@@ -31,11 +31,10 @@ public class DataHolder {
         teachers.add(new Teacher("Zoran", "Nikolov"));
 
 
-        List<Student> first = new ArrayList<>();
-        List<Student> second = new ArrayList<>();
-        List<Student> third = new ArrayList<>();
-        List<Student> fifth = new ArrayList<>();
-
+        Set<Student> first = new HashSet<>();
+        Set<Student> second = new HashSet<>();
+        Set<Student> third = new HashSet<>();
+        Set<Student> fifth = new HashSet<>();
         first.add(students.get(0));
         first.add(students.get(1));
         first.add(students.get(3));
@@ -51,7 +50,7 @@ public class DataHolder {
 
 
         courses.add(new Course(
-                "Veb Programiranje",
+                    "Veb Programiranje",
                 "Poceten kurs za backend programiranje so Java Spring",
                 first, teachers.get(4)));
         courses.add(new Course(
@@ -65,7 +64,7 @@ public class DataHolder {
         courses.add(new Course(
                 "Inzinerska Matematika",
                 "Matematika za pospremni studenti",
-                new ArrayList<>(),teachers.get(3)));
+                new HashSet<>(),teachers.get(3)));
         courses.add(new Course(
                 "Verojatnost i Statistika",
                 "Begaj podaleku",

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Grade list</title>
+  <style type = "text/css">
+    body {
+      width: 800px;
+      margin: auto;
+    }
+    table {
+      width:100%;
+    }
+    table, td, th {
+      border: 1px solid black;
+      padding:3px 2px;
+    }
+    section {
+      float: left;
+      margin: 0 1.5%;
+      width: 63%;
+    }
+    aside {
+      float: right;
+      margin: 0 1.5%;
+      width: 30%;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>University Grades </h1>
+</header>
+<section>
+  <!--/*@thymesVar id="grade" type="mk.ukim.finki.wp.model.Grade"*/-->
+
+
+  <a href='/AddStudent' type='button'>Go Back!</a><br/> <br/>
+  <form th:action="@{/courses/grades}" method="GET">
+    <input type="datetime-local" name="from">
+    <input type="datetime-local" name="to">
+    <button type="submit">Search</button>
+  </form>
+  <h2>Grades:</h2>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>Course Name</th>
+      <th>Grade</th>
+      <th>Time of Grade</th>
+    </tr>
+    <tr th:each="grade : ${grades}">
+
+      <td th:text="${grade.student.getName()}"></td>
+      <td th:text="${grade.student.getSurname()}"></td>
+      <td th:text="${grade.course.getName()}"></td>
+      <td th:text="${grade.grade}"></td>
+      <td th:text="${#temporals.format(grade.getTimestamp())}"></td>
+
+    </tr>
+  </table>
+
+  <br/>
+
+
+</section>
+
+</body>
+</html>

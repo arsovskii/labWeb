@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.service.implementation;
 import mk.ukim.finki.wp.model.Student;
 import mk.ukim.finki.wp.model.exceptions.NotEnoughInfoForNewStudentException;
 import mk.ukim.finki.wp.repository.StudentRepository;
+import mk.ukim.finki.wp.repository.jpa.StudentRepositoryDB;
 import mk.ukim.finki.wp.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,20 +15,20 @@ import java.util.Objects;
 public class StudentServiceImplementation implements StudentService {
 
 
-    private final StudentRepository studentRepository;
+    private final StudentRepositoryDB studentRepository;
 
-    public StudentServiceImplementation(StudentRepository studentRepository) {
+    public StudentServiceImplementation(StudentRepositoryDB studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     @Override
     public List<Student> listAll() {
-        return studentRepository.findAllStudents();
+        return studentRepository.findAll();
     }
 
     @Override
     public List<Student> searchByNameOrSurname(String text) {
-        return studentRepository.findAllByNameOrSurname(text);
+        return studentRepository.findAllByNameOrSurname(text,text);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class StudentServiceImplementation implements StudentService {
         if (Objects.equals(username, "") || Objects.equals(name, "") || Objects.equals(surname, "") || Objects.equals(password, "")) {
             throw new NotEnoughInfoForNewStudentException();
         }
-        return studentRepository.addStudent(new Student(username, password, name, surname, Boolean.TRUE));
+        return studentRepository.save(new Student(username, password, name, surname, Boolean.TRUE));
 
 
     }

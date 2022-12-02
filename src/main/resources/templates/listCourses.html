@@ -8,6 +8,20 @@
             width: 800px;
             margin: auto;
         }
+        .course{
+            padding:10px;
+            margin:8px;
+            border-radius: 3px;
+        }
+        form{
+            display:block;
+            margin:10px;
+            padding:10px;
+        }
+        .highlight{
+            background: red;
+            color:white;
+        }
     </style>
 
 </head>
@@ -22,17 +36,23 @@
         <br>
         <th:div th:text="${error}" style="background:red; color:white;"></th:div>
     </th:block>
+    <h2>Choose teacher:</h2>
+    <form th:action="@{/courses}" method = "GET">
+        <select name='teacherId' id="teacher" required >
+            <option th:each="teacher : ${teachers}" th:value="${teacher.getId()}" th:text="${teacher.getName() + ' ' + teacher.getSurname()}" th:selected="${selectedTeacher != null && teacher.getId().equals(selectedTeacher)}"></option>
+        </select><br><br>
+        <button type="submit">Find Courses!</button>
+    </form>
 
     <h2>Choose course:</h2>
         <!--/*@thymesVar id="course" type="mk.ukim.finki.wp.model.Course"*/-->
-
     <form th:action="@{/courses}" method="POST">
 
         <th:div th:each="course : ${courses}" >
 
             <input type="radio" name="courseId" th:value="${course.getCourseId()}">
 
-            <th:span th:text="${course.getName()}"></th:span>
+            <th:span class="course" th:text="${course.getName()}" th:classappend="${course.getTeacher().getId().equals(selectedTeacher)}? 'highlight'"></th:span>
             <br>
             <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"  >Edit</a>
             <br>

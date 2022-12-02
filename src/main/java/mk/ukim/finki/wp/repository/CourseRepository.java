@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class CourseRepository {
@@ -24,7 +25,7 @@ public class CourseRepository {
         return DataHolder.courses.stream().filter(i -> i.getCourseId().equals(courseId)).findFirst();
     }
 
-    public List<Student> findAllStudentsByCourse(Long courseId) {
+    public Set<Student> findAllStudentsByCourse(Long courseId) {
         try {
             if (findById(courseId).isEmpty()) {
                 throw new CourseDoesntExistException();
@@ -80,5 +81,7 @@ public class CourseRepository {
 
         return course;
     }
+
+
 
 }

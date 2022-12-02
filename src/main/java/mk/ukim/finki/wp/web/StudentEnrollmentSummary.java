@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Student Enrollment", urlPatterns = "/StudentEnrollmentSummary")
+@WebServlet(name = "Student Enrollment", urlPatterns = "/StudentEnrollmentSummaryServlet")
 public class StudentEnrollmentSummary extends HttpServlet {
 
     private final SpringTemplateEngine springTemplateEngine;
@@ -42,7 +42,8 @@ public class StudentEnrollmentSummary extends HttpServlet {
 //            WebContext context = new WebContext(req,resp,req.getServletContext());
 //            context.setVariable("error",e.getMessage());
 //            springTemplateEngine.process("studentsInCourse.html", context, resp.getWriter());
-            resp.sendRedirect("/courses?error=Student was Already in Course!");
+
+            resp.sendRedirect("/courses?error="+e.getMessage());
         }
 
     }
