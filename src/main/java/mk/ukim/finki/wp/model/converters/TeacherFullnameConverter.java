@@ -22,7 +22,7 @@ public class TeacherFullnameConverter implements AttributeConverter<TeacherFulln
             sb.append(teacherFullname.getSurname());
             sb.append(SEPARATOR);
         }
-        if (teacherFullname.getName() != null && teacherFullname.getName().isEmpty()) {
+        if (teacherFullname.getName() != null && !teacherFullname.getName().isEmpty()) {
             sb.append(teacherFullname.getName());
         }
         return sb.toString();
@@ -52,7 +52,6 @@ public class TeacherFullnameConverter implements AttributeConverter<TeacherFulln
         } else {
             personName.setName(firstPiece);
         }
-
         return personName;
     }
 }

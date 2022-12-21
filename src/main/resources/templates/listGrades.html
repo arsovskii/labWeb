@@ -33,12 +33,35 @@
 </header>
 <section>
   <!--/*@thymesVar id="grade" type="mk.ukim.finki.wp.model.Grade"*/-->
-
+  <!--/*@thymesVar id="course" type="mk.ukim.finki.wp.model.Course"*/-->
 
   <a href='/AddStudent' type='button'>Go Back!</a><br/> <br/>
   <form th:action="@{/courses/grades}" method="GET">
     <input type="datetime-local" name="from">
     <input type="datetime-local" name="to">
+    <br>
+    From:<select name="selectedFirstGrade">
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+      <option value="E">E</option>
+      <option value="F">F</option>
+    </select>
+    To:<select name="selectedSecondGrade">
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+      <option value="E">E</option>
+      <option value="F">F</option>
+    </select>
+    <br>
+    <select name="selectedCourse">
+      <option value="-1" selected>/</option>
+      <option th:each="course: ${courses}" th:value="${course.getCourseId()}" th:text="${course.getName()}"></option>
+
+    </select>
     <button type="submit">Search</button>
   </form>
   <h2>Grades:</h2>
@@ -46,7 +69,7 @@
     <tr>
       <th>Name</th>
       <th>Surname</th>
-      <th>Course Name</th>
+      <th>Couarse Name</th>
       <th>Grade</th>
       <th>Time of Grade</th>
     </tr>

@@ -72,16 +72,16 @@ public class CourseController {
     @GetMapping("/grades")
     public String getGradePage( @RequestParam(required = false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
                                 @RequestParam(required = false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME) LocalDateTime to,
+                                @RequestParam(required = false) Character selectedFirstGrade,
+                                @RequestParam(required = false) Character selectedSecondGrade,
+                                @RequestParam(required = false) Long selectedCourse,
                                 Model model){
-        if(from == null && to == null){
-            model.addAttribute("grades",gradeService.showAllGrades());
-        }else if(from == null){
-            model.addAttribute("grades",gradeService.showAllGradesBefore(to));
-        }else if(to == null){
-            model.addAttribute("grades",gradeService.showGradesBetween(from,LocalDateTime.now()));
-        }else{
-            model.addAttribute("grades",gradeService.showGradesBetween(from,to));
-        }
+        model.addAttribute("courses",courseService.listAll());
+        model.addAttribute("firstGrade",selectedFirstGrade);
+        model.addAttribute("secondGrade",selectedSecondGrade);
+        model.addAttribute("selectedCourse",selectedCourse);
+
+        model.addAttribute("grades",gradeService.showAllGrades(from,to,selectedFirstGrade,selectedSecondGrade,selectedCourse));
         return "listGrades";
     }
 
