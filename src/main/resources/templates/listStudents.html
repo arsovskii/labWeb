@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8">
   <title>Add new Student to Course</title>
@@ -34,7 +34,7 @@
 <section>
   <!--/*@thymesVar id="student" type="mk.ukim.finki.wp.model.Student"*/-->
   <h2>Select the student to enroll:</h2>
-  <a href='/createStudent' type='button'>Create New Student</a> <br/> <br/>
+  <a href='/createStudent' type='button' sec:authorize="hasRole('ROLE_ADMIN')">Create New Student</a> <br/> <br/>
   <a href='/newStudentList' type='button'>See list of all new students</a><br/> <br/>
 
   <form th:action="@{/StudentEnrollmentSummary}" method="POST">

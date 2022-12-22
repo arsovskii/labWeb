@@ -26,6 +26,7 @@ public class NewStudentLister extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         context.setVariable("students",studentService.listAll().stream().filter(Student::getNewStudent).toList());

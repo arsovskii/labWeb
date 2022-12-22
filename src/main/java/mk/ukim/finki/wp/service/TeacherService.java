@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TeacherService {
     public List<Teacher> findAll();
+    public Teacher save(String name, String surname);
 }

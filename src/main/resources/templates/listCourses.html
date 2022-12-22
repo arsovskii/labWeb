@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>Welcome and Choose a Course</title>
@@ -28,9 +28,18 @@
 <body>
 <header>
     <h1>Courses List</h1>
+    <th:block th:if="${#request.getRemoteUser() != null}">
+        <span style="float:right;margin-left:10px;border:1px dotted black"  th:text="${#request.getRemoteUser()}"></span>
+        <a style="float:right;" href="/logout" > Logout</a>
+    </th:block>
+
+    <a th:if="${#request.getRemoteUser() == null}" style="float:right;" href="/login" > Login</a>
+
 </header>
 <main>
-    <a href="/courses/add-form">Add new Course!</a><br>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="addButton" href="/courses/add-form">Add new Course!</a><br>
+    </th:block>
     <a href='/courses/grades' type='button'>See list of all grades</a><br/> <br/>
     <th:block th:if="${error != null}">
         <br>
@@ -46,19 +55,22 @@
 
     <h2>Choose course:</h2>
         <!--/*@thymesVar id="course" type="mk.ukim.finki.wp.model.Course"*/-->
+
     <form th:action="@{/courses}" method="POST">
 
         <th:div th:each="course : ${courses}" >
 
-            <input type="radio" name="courseId" th:value="${course.getCourseId()}">
+            <input required type="radio" name="courseId" th:value="${course.getCourseId()}">
 
             <th:span class="course" th:text="${course.getName()}" th:classappend="${course.getTeacher().getId().equals(selectedTeacher)}? 'highlight'"></th:span>
             <br>
-            <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"  >Edit</a>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="editButton" th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"  >Edit</a>
+                <br>
+                <a class="deleteButton" th:href="@{'/courses/delete/{id}' (id=${course.getCourseId()})}"  >Delete</a>
+                <br/>
+            </th:block>
             <br>
-            <a th:href="@{'/courses/delete/{id}' (id=${course.getCourseId()})}"  >Delete</a>
-            <br/><br>
-
         </th:div>
 
         <button type="submit">Submit</button>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>WP lab - Students in Course</title>
@@ -27,9 +27,11 @@
     </div>
     <br>
     <br>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
     <div>
         Add a grade:
     </div>
+
     <form th:action="@{/courses/add-grade}" method = "POST">
         <input type="text" name="selectedStudent" hidden th:value="${session.currentStudent}">
         <input type="text" name="selectedCourse"  hidden th:value="${session.courseId}">
@@ -45,6 +47,7 @@
         <button type="submit">Submit Grade!</button>
 
     </form>
+    </th:block>
     <a href="/courses">Back</a>
 </section>
 

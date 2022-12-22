@@ -6,6 +6,7 @@ import mk.ukim.finki.wp.service.CourseService;
 import mk.ukim.finki.wp.service.GradeService;
 import mk.ukim.finki.wp.service.TeacherService;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,18 +48,21 @@ public class CourseController {
     }
 
     @GetMapping("/add-form")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getAddCoursePage(Model model) {
         model.addAttribute("teachers", teacherService.findAll());
         return "add-course";
     }
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteCourse(@PathVariable Long id) {
         courseService.deleteCourseById(id);
         return "redirect:/courses";
     }
 
     @GetMapping("/edit-form/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getEditCoursePage(@PathVariable Long id, Model model) {
 
         try {
@@ -92,6 +96,7 @@ public class CourseController {
     }
 
     @PostMapping("/add-form")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String saveCourse(@RequestParam(required = false) Long courseId, @RequestParam Long teacherId, @RequestParam String name, @RequestParam String desc) {
 
         try {
@@ -108,6 +113,7 @@ public class CourseController {
     }
 
     @PostMapping("/add-grade")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addGrade(@RequestParam String selectedStudent, @RequestParam Long selectedCourse,@RequestParam Character selectedGrade, @RequestParam(required = false) @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateGrade){
         if(dateGrade == null){
             dateGrade = LocalDateTime.now();

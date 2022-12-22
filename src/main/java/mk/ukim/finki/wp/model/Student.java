@@ -16,6 +16,14 @@ public class Student {
     private String surname;
     private Boolean newStudent;
 
+    public Student(String username, String password, String name, String surname) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.newStudent = true;
+    }
+
     public Student(String username, String password, String name, String surname, Boolean newStudent) {
         this.username = username;
         this.password = password;

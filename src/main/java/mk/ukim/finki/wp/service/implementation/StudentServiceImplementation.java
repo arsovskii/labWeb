@@ -2,10 +2,9 @@ package mk.ukim.finki.wp.service.implementation;
 
 import mk.ukim.finki.wp.model.Student;
 import mk.ukim.finki.wp.model.exceptions.NotEnoughInfoForNewStudentException;
-import mk.ukim.finki.wp.repository.StudentRepository;
+import mk.ukim.finki.wp.model.exceptions.UsernameAlreadyInUse;
 import mk.ukim.finki.wp.repository.jpa.StudentRepositoryDB;
 import mk.ukim.finki.wp.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +35,9 @@ public class StudentServiceImplementation implements StudentService {
 
         if (Objects.equals(username, "") || Objects.equals(name, "") || Objects.equals(surname, "") || Objects.equals(password, "")) {
             throw new NotEnoughInfoForNewStudentException();
+        }
+        if (studentRepository.existsByUsername(username)){
+            throw new UsernameAlreadyInUse(username);
         }
         return studentRepository.save(new Student(username, password, name, surname, Boolean.TRUE));
 
