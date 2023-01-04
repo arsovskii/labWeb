@@ -15,13 +15,13 @@ public class CoursesPage extends AbstractPage {
     @FindBy(className = "course")
     private List<WebElement> courseList;
 
-    @FindBy(css = ".editButton")
+    @FindBy(className = "editButton")
     private List<WebElement> editButtons;
 
-    @FindBy(css = ".deleteButton")
+    @FindBy(className = "deleteButton")
     private List<WebElement> deleteButtons;
 
-    @FindBy(css = ".addButton")
+    @FindBy(className = "addButton")
     private List<WebElement> addButtons;
 
     public CoursesPage(WebDriver driver) {
